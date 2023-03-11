@@ -129,8 +129,10 @@ public class NotaGenerator {
         // Handling jika hasil checksum tidak tepat 2 digit.
         if (checkSum < 10)
             checkedSum = "0" + checkSum;
-        else if (checkSum > 99)
-            checkedSum = (Integer.toString(checkSum)).substring(0,2); // Ambil 2 digit pertama, truncate sisanya.
+        else if (checkSum > 99) {
+            checkedSum = (Integer.toString(checkSum));
+            checkedSum = checkedSum.substring(checkedSum.length() - 2);
+        }
         else
             checkedSum = Integer.toString(checkSum);
 
@@ -152,7 +154,6 @@ public class NotaGenerator {
         // Assign awal sebagai paket express.
         int hargaPerKg = 12000;
         int hariPengerjaan = 1;
-
         // Selection, jika bukan paket fast atau reguler --> paket express.
         switch (paket) {
             case "fast" -> {
