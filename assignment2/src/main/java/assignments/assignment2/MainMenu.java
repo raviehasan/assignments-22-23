@@ -38,6 +38,8 @@ public class MainMenu {
         System.out.println("Terima kasih telah menggunakan NotaGenerator!");
     }
 
+
+
     public static String inputNoHP() {
         System.out.println("Masukkan nomor handphone Anda: ");
         String noHP = input.nextLine();
@@ -82,13 +84,15 @@ public class MainMenu {
         }
         if (param) {
             String paket;
+            String paketLowerCase;
             // Loop, stop jika user input "fast"/"express"/"reguler" sebagai paket.
             do {
                 System.out.println("Masukkan paket laundry: ");
-                paket = (input.nextLine()).toLowerCase();
+                paket = input.nextLine();
+                paketLowerCase = paket.toLowerCase();
                 if (paket.equals("?"))
-                    showPaket(); // Harusnya private NANTI UBAH LG
-                else if (!(paket.equals("express") || paket.equals("fast") || paket.equals("reguler")))
+                    printPaket();
+                else if (!(paketLowerCase.equals("express") || paketLowerCase.equals("fast") || paketLowerCase.equals("reguler")))
                     System.out.printf("Paket %s tidak diketahui\n[ketik ? untuk mencari tahu jenis paket]\n", paket);
                 else
                     break; // Input sudah sesuai.
@@ -104,6 +108,7 @@ public class MainMenu {
             }
             Nota nota = new Nota(memberSekarang, paket, berat, fmt.format(cal.getTime()));
             notaList.add(nota);
+            memberSekarang.incrementBonusCounter();
             printNota(nota, memberSekarang);
         }
         else
@@ -159,7 +164,7 @@ public class MainMenu {
         }
         else
             System.out.printf("Nota dengan ID %s tidak ditemukan!\n", akanDiambil);
-}
+    }
 
     private static void handleNextDay() {
         // TODO: handle ganti hari
@@ -188,6 +193,17 @@ public class MainMenu {
         System.out.println("[0] Exit");
     }
 
+    /**
+     * Method untuk menampilkan paket yang tersedia.
+     */
+    public static void printPaket() {
+        System.out.println("+-------------Paket-------------+");
+        System.out.println("| Express | 1 Hari | 12000 / Kg |");
+        System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
+        System.out.println("| Reguler | 3 Hari |  7000 / Kg |");
+        System.out.println("+-------------------------------+");
+    }
+
     private static boolean isNumeric(String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isDigit(c))
@@ -208,8 +224,16 @@ public class MainMenu {
         System.out.printf("ID\t: %s\n", member.getId());
         System.out.printf("Paket : %s%s\n", nota.getPaket().substring(0,1).toUpperCase(), nota.getPaket().substring(1));
         System.out.println("Harga :");
+
         int harga = nota.getBerat() * nota.getHargaPerKg();
-        System.out.printf("%d kg x %d = %d\n", nota.getBerat(), nota.getHargaPerKg(), harga);
+        if (member.getBonusCounter() == 3) {
+            member.setBonusCounter(0); // Reset
+            System.out.printf("%d kg x %d = %d\n", nota.getBerat(), nota.getHargaPerKg(), harga / 2);
+            System.out.println("(Discount member 50%!!!)");
+        }
+        else
+            System.out.printf("%d kg x %d = %d\n", nota.getBerat(), nota.getHargaPerKg(), harga);
+
         System.out.printf("Tanggal Terima  : %s\n", nota.getTanggalMasuk());
         System.out.printf("Tanggal Selesai : %s\n", fmt.format(cal.getTime()));
         System.out.printf("Status      \t: %s\n", nota.isItReady());

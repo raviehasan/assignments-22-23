@@ -54,7 +54,7 @@ public class NotaGenerator {
     /**
      * Method untuk menampilkan paket yang tersedia.
      */
-    public static void showPaket() {
+    private static void showPaket() {
         System.out.println("+-------------Paket-------------+");
         System.out.println("| Express | 1 Hari | 12000 / Kg |");
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
