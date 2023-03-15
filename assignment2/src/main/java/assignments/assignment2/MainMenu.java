@@ -1,6 +1,5 @@
 package assignments.assignment2;
 import assignments.assignment1.NotaGenerator;
-import org.w3c.dom.ls.LSOutput;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -222,13 +221,13 @@ public class MainMenu {
         System.out.println("Berhasil menambahkan nota!");
         System.out.printf("[ID Nota = %d]\n", nota.getIdNota());
         System.out.printf("ID\t: %s\n", member.getId());
-        System.out.printf("Paket : %s%s\n", nota.getPaket().substring(0,1).toUpperCase(), nota.getPaket().substring(1));
+        System.out.printf("Paket : %s\n", nota.getPaket());
         System.out.println("Harga :");
 
         int harga = nota.getBerat() * nota.getHargaPerKg();
         if (member.getBonusCounter() == 3) {
             member.setBonusCounter(0); // Reset
-            System.out.printf("%d kg x %d = %d\n", nota.getBerat(), nota.getHargaPerKg(), harga / 2);
+            System.out.printf("%d kg x %d = %d ", nota.getBerat(), nota.getHargaPerKg(), harga / 2);
             System.out.println("(Discount member 50%!!!)");
         }
         else
