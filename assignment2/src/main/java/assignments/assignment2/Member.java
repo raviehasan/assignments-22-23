@@ -1,9 +1,5 @@
 package assignments.assignment2;
 
-import assignments.assignment1.NotaGenerator;
-
-import java.util.ArrayList;
-
 public class Member {
     // TODO: tambahkan attributes yang diperlukan untuk class ini
     private String nama;
@@ -19,8 +15,19 @@ public class Member {
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
+
+    /**
+     * Method untuk increment bonus counter saat seorang member generate nota.
+     */
     public void incrementBonusCounter() {
         this.bonusCounter++;
+    }
+
+    /**
+     * Kumpulan method getter dan setter.
+     */
+    public String getNama() {
+        return this.nama;
     }
 
     public int getBonusCounter() {
@@ -29,14 +36,6 @@ public class Member {
 
     public void setBonusCounter(int bonusCounter) {
         this.bonusCounter = bonusCounter;
-    }
-
-    public String getNama() {
-        return this.nama;
-    }
-
-    public String getNoHP() {
-        return this.noHP;
     }
 
     public String getId() {

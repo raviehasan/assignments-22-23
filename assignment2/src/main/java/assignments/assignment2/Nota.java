@@ -1,11 +1,6 @@
 package assignments.assignment2;
 
-import assignments.assignment1.NotaGenerator;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import static assignments.assignment1.NotaGenerator.tanggalSelesaiCounter;
 
 public class Nota {
     // TODO: tambahkan attributes yang diperlukan untuk class ini
@@ -35,7 +30,11 @@ public class Nota {
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
-
+    /**
+     * Method untuk selection harga dan waktu untuk paket exprees, fast, dan reguler.
+     *
+     * @return int sesuai parameter.
+     */
     public int selectionKarateristikPaket(int a, int b, int c) {
         switch (this.paket.toLowerCase()) {
             case "express" -> {
@@ -53,10 +52,9 @@ public class Nota {
         }
     }
 
-    public Member getMember() {
-        return this.member;
-    }
-
+    /**
+     * Method-method getter.
+     */
     public String getTanggalMasuk() {
         return this.tanggalMasuk;
     }
@@ -73,14 +71,6 @@ public class Nota {
         return this.berat;
     }
 
-    public String isItReady() {
-        if (this.sisaHariPengerjaan == 0) {
-            return "Sudah dapat diambil!";
-        }
-        else
-            return "Belum bisa diambil :(";
-    }
-
     public int getHariPengerjaan() {
         return this.hariPengerjaan;
     }
@@ -93,6 +83,15 @@ public class Nota {
         return this.sisaHariPengerjaan;
     }
 
+    public boolean getIsReady() {
+        return this.isReady;
+    }
+
+
+    /**
+     * Method untuk decrement sisa hari pengerjaan untuk fitur next day.
+     * Jika sisa hari pengerjaan sudah == 0, maka tidak perlu decrement lagi
+     */
     public void decrementSisaHariPengerjaan() {
         if (this.sisaHariPengerjaan > 0)
             this.sisaHariPengerjaan--;
@@ -100,11 +99,16 @@ public class Nota {
             this.isReady = true;
     }
 
-    public boolean getIsReady() {
-        return this.isReady;
+    /**
+     * Method untuk cek apakah sudah dapat ambil cucian.
+     * Jika sisa hari pengerjaan == 0, maka stop decrement karena cucian sudah dapat diambil.
+     */
+    public String isItReady() {
+        if (this.sisaHariPengerjaan == 0) {
+            return "Sudah dapat diambil!";
+        }
+        else
+            return "Belum bisa diambil :(";
     }
 
-    public ArrayList<Integer> getListIdNota() {
-        return listIdNota;
-    }
 }
