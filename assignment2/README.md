@@ -48,6 +48,15 @@ Untuk menjalankan program:
 > gradlew.bat :assignment2:run --console plain
 ```
 
+Untuk menguji program dengan *test case* yang disediakan:
+
+```bash
+> gradlew.bat :assignment2:test
+```
+
+> Tips: kamu bisa memeriksa hasil tes dalam bentuk dokumen HTML. Lihat dokumen
+> HTML tersebut di dalam folder `build\reports` yang ada di direktori ini.
+
 Jika kamu tidak ingin menggunakan Gradle, kamu juga bisa melakukan kompilasi
 dan menjalankan program dengan `javac` dan `java` seperti biasa. Masuk ke
 direktori `src\main\java`, *compile* semua berkas `.java` kamu, dan jalankan
