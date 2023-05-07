@@ -1,11 +1,13 @@
 package assignments.assignment3.user.menu;
 
+import assignments.assignment3.LoginManager;
+import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
 
 import java.util.Scanner;
 
 public abstract class SystemCLI {
-    protected Member[] memberList = new Member[0];
+    protected static Member[] memberList = new Member[0];
     protected Member loginMember;
     protected Scanner in;
 
@@ -27,7 +29,7 @@ public abstract class SystemCLI {
             return;
         }
 
-        System.out.println("Invalid ID or password.");
+        System.out.println("Invalid ID or password.\n");
     };
 
     /**
@@ -46,7 +48,7 @@ public abstract class SystemCLI {
             logout = processChoice(choice);
         }
         loginMember = null;
-        System.out.println("Logging out...");
+        System.out.println("Logging out...\n");
     }
 
     /**
@@ -76,13 +78,30 @@ public abstract class SystemCLI {
      * @return true jika ada member dengan ID yang diberikan, false jika tidak.
      */
     public boolean isMemberExist(String id){
-        for (Member member:
-                memberList) {
+        for (Member member: memberList) {
             if(member.getId().equals(id)){
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Method untuk cek suatu instance dari member seorang member biasa atau employee.
+     *
+     * @param id -> ID yang akan diperiksa.
+     * @return "employee" jika seorang employee, false jika bukan.
+     */
+    public String memberOrEmployee(String id){
+        for (Member member : memberList) {
+            if(member.getId().equals(id)){
+                if (member instanceof Employee)
+                    return "employee";
+                else
+                    return "member";
+            }
+        }
+        return "";
     }
 
     /**

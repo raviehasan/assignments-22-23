@@ -14,7 +14,9 @@ public class Employee extends Member {
      * @param nama -> Nama lengkap dari employee
      */
     private static String generateId(String nama) {
-        // TODO
-        return "";
+        if (nama.contains(" "))
+             nama = nama.substring(0, (nama.indexOf(" "))); // Ambil fisrt name.
+
+        return nama.toUpperCase() + "-" + Employee.employeeCount++;
     }
 }
