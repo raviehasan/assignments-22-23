@@ -111,7 +111,6 @@ public class MemberSystem extends SystemCLI {
      * @param member -> Member baru yang akan ditambahkan.
      */
     public void addMember(Member member) {
-        // TODO
         Member[] newArray = new Member[memberList.length + 1];
         System.arraycopy(memberList, 0, newArray, 0, memberList.length);
         newArray[newArray.length - 1] = member;

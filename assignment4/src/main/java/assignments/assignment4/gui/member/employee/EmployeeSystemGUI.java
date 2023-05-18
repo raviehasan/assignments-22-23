@@ -9,6 +9,9 @@ import assignments.assignment4.gui.member.AbstractMemberGUI;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
+import static assignments.assignment3.nota.NotaManager.notaList;
+import static javax.swing.JOptionPane.*;
+
 public class EmployeeSystemGUI extends AbstractMemberGUI {
     public static final String KEY = "EMPLOYEE";
 
@@ -32,6 +35,8 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
     protected JButton[] createButtons() {
         // TODO
         return new JButton[]{
+                new JButton("It's nyuci time"),
+                new JButton("Display List Nota"),
         };
     }
 
@@ -55,6 +60,20 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void displayNota() {
         // TODO
+        String status = "";
+        for (Nota nota : notaList) {
+            status += String.format("Nota %d : %s\n", nota.getIdNota(), nota.getNotaStatus());
+        }
+        if (status.equals("")) {
+            JTextField text = new JTextField("Belum ada nota");
+            text.setEditable(false);
+            showMessageDialog(this, text, "List Nota", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            JTextArea text = new JTextArea(status);
+            text.setEditable(false);
+            showMessageDialog(this, text, "List Nota", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
@@ -63,5 +82,18 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
+        String status = "";
+        showMessageDialog(this, String.format("Stand back! %s beginning to nyuci",
+                loggedInMember.getNama()), "Nyuci Time", INFORMATION_MESSAGE);
+
+        for (Nota nota : notaList) {
+            status += String.format("Nota %d : %s\n", nota.getIdNota(), nota.kerjakan());
+        }
+//        JTextArea text = new JTextArea(status);
+        if (status.equals(""))
+            showMessageDialog(this, "nothing to cuci here", "Nyuci Results", ERROR_MESSAGE);
+        else
+            showMessageDialog(this, status, "List Nota", INFORMATION_MESSAGE);
     }
+
 }

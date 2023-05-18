@@ -134,7 +134,7 @@ public class Nota {
      // Di bawah ini adalah getter
 
     public long getBaseHarga() {
-        switch (this.paket) {
+        switch (this.paket.toLowerCase()) {
             case "express" -> {
                 return 12000;
             }
@@ -151,7 +151,7 @@ public class Nota {
     }
 
     public int getHariPengerjaan() {
-        switch (this.paket) {
+        switch (this.paket.toLowerCase()) {
             case "express" -> {
                 return 1;
             }

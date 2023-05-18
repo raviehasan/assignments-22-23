@@ -3,6 +3,7 @@ import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
+import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.gui.HomeGUI;
 import assignments.assignment4.gui.LoginGUI;
 import assignments.assignment4.gui.RegisterGUI;
@@ -32,15 +33,16 @@ public class MainFrame extends JFrame{
 
     private MainFrame(){
         super("CuciCuciSystem");
-//        TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
-//        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
-//        employeeSystem.addEmployee(new Employee[]{
-//                new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
-//                new Employee("Regret", "FansBeratKanaArima")
-//        });
+        // TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
+        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
+        employeeSystem.addEmployee(new Employee[]{
+                new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
+                new Employee("Regret", "FansBeratKanaArima")
+        });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
+        setLocationRelativeTo(null); // center
         loginablePanel = new Loginable[]{
                 employeeSystemGUI,
                 memberSystemGUI,
@@ -84,6 +86,7 @@ public class MainFrame extends JFrame{
      * */
     public void navigateTo(String page){
         // TODO
+        cards.show(mainPanel, page);
     }
 
     /**
@@ -97,9 +100,21 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
+        SystemCLI systemCLI = loginManager.getSystem(id);
         for (Loginable panel:
                 loginablePanel) {
             // TODO
+            if (systemCLI instanceof EmployeeSystem && panel instanceof EmployeeSystemGUI) {
+                if (panel.login(id, password)) {
+                    navigateTo(EmployeeSystemGUI.KEY);
+                    return true;
+                }
+            } else if (systemCLI instanceof MemberSystem && panel instanceof MemberSystemGUI) {
+                if (panel.login(id, password)) {
+                    navigateTo(MemberSystemGUI.KEY);
+                    return true;
+                }
+            }
         }
         return false;
     }

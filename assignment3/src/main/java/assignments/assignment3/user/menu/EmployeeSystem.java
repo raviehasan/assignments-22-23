@@ -53,6 +53,14 @@ public class EmployeeSystem extends SystemCLI {
         return logout;
     }
 
+    public void addEmployee(Member[] members){
+        Member[] result = new Member[memberList.length + 2];
+        System.arraycopy(memberList, 0, result, 0, memberList.length);
+        result[result.length - 2] = members[0];
+        result[result.length -1] = members[1];
+        memberList = result;
+    }
+
     /**
      * Displays specific menu untuk Employee.
      */
