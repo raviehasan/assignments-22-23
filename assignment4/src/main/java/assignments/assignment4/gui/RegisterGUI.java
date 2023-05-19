@@ -139,7 +139,7 @@ public class RegisterGUI extends JPanel {
             handleBack(); // Clear fields
 
         } else {
-            JTextField text = new JTextField(String.format("Berhasil membuat user dengan ID %s",
+            JTextField text = new JTextField(String.format("Berhasil membuat user dengan ID %s!",
                     registeredMember.getId()));
             text.setEditable(false);
             showMessageDialog(this, text, "Registration Successful", JOptionPane.INFORMATION_MESSAGE);

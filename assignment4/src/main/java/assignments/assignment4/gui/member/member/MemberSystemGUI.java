@@ -75,7 +75,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
 
         // Iterasi setiap nota yang dipesan oleh member yang sedang login saat ini
         for (Nota nota : loggedInMember.getNotaList()) {
-            status += nota + "\n\n";
+            status += nota + "\n\n\n"; // Space antar nota 2 enter (sesuai test case)
         }
 
         // Jika member tidak pernah pesan nota
@@ -83,8 +83,8 @@ public class MemberSystemGUI extends AbstractMemberGUI {
             JTextArea text = new JTextArea("Belum pernah laundry di CuciCuci, hiks :'(");
             text.setEditable(false);
             JScrollPane scroll = new JScrollPane(text);
-            scroll.setPreferredSize(new Dimension(300, 300));
-            showMessageDialog(this, scroll, "Detail Nota", JOptionPane.ERROR_MESSAGE);
+            scroll.setPreferredSize(new Dimension(400, 300));
+            showMessageDialog(this, scroll, "Detail Nota", INFORMATION_MESSAGE);
         }
 
         // Jika ada setidaknya 1 nota
@@ -92,7 +92,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
             JTextArea text = new JTextArea(status);
             text.setEditable(false);
             JScrollPane scroll = new JScrollPane(text);
-            scroll.setPreferredSize(new Dimension(300, 300));
+            scroll.setPreferredSize(new Dimension(400, 300));
             showMessageDialog(this, scroll, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
         }
     }

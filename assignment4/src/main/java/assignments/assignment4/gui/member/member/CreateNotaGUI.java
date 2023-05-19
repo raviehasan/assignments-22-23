@@ -145,29 +145,32 @@ public class CreateNotaGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "createNotaButton"
      * */
     private void createNota() {
-        // TODO
+        // Collect data dari input user
         Member loggedInMember = memberSystemGUI.getLoggedInMember();
         String paket = (String) paketComboBox.getSelectedItem();
         String beratCek = beratTextField.getText();
         boolean param = RegisterGUI.validasiDigit(beratCek, "berat"); // jika input berat valid --> param = true
+
+        // Jika berat sudah sesuai (digit dan >= 1)
         if (param) {
             int berat = Integer.parseInt(beratCek);
-
             if (berat < 2) {
                 berat = 2;
                 showMessageDialog(this, "Cucian kurang dari 2kg, maka cucian akan dianggap sebagai 2kg",
                         "Info", JOptionPane.INFORMATION_MESSAGE);
             }
 
+            // Initialize objek nota dan add laundry service yang dipilih member pada checkbox
             Nota nota = new Nota(loggedInMember, berat, paket, fmt.format(cal.getTime()));
             nota.addService(new CuciService());
             if (setrikaCheckBox.isSelected())
                 nota.addService(new SetrikaService());
             if (antarCheckBox.isSelected())
                 nota.addService(new AntarService());
+
+            // Add objek nota ke sistem
             NotaManager.addNota(nota);
             loggedInMember.addNota(nota);
-
             showMessageDialog(this, "Nota berhasil dibuat!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             // clear fields
