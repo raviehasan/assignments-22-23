@@ -1,22 +1,14 @@
 package assignments.assignment4.gui;
 
-import assignments.assignment3.LoginManager;
 import assignments.assignment3.nota.NotaManager;
-import assignments.assignment3.user.Member;
-import assignments.assignment3.user.menu.EmployeeSystem;
-import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment4.MainFrame;
 
-import javax.accessibility.AccessibleIcon;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.function.ToDoubleBiFunction;
 
-import static assignments.assignment3.nota.NotaManager.*;
-import static javax.swing.JOptionPane.*;
+import static assignments.assignment3.nota.NotaManager.cal;
+import static assignments.assignment3.nota.NotaManager.fmt;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class HomeGUI extends JPanel {
     public static final String KEY = "HOME";
@@ -27,6 +19,9 @@ public class HomeGUI extends JPanel {
     private JButton registerButton;
     private JButton toNextDayButton;
 
+    /**
+     * Constructor
+     */
     public HomeGUI(){
         super(new BorderLayout()); // Setup layout, Feel free to make any changes
 
@@ -49,6 +44,7 @@ public class HomeGUI extends JPanel {
     private void initGUI() {
         GridBagConstraints c = new GridBagConstraints();
 
+        // Initialize komponen-komponen yang diperlukan
         titleLabel = new JLabel("Selamat Datang di CuciCuci System!", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         loginButton = new JButton("Login");
@@ -57,28 +53,33 @@ public class HomeGUI extends JPanel {
         dateLabel = new JLabel("Hari ini: " + fmt.format(cal.getTime()), JLabel.CENTER);
 
         c.insets = new Insets(0, 0, 50, 0);
+
+        // Row 1
         c.gridx = 1;
         c.gridy = 0;
         mainPanel.add(titleLabel, c);
 
+        // Row 2
         c.insets = new Insets(0, 0, 75, 0);
         c.gridy = 1;
         mainPanel.add(loginButton, c);
 
+        // Row 3
         c.gridy = 2;
         mainPanel.add(registerButton, c);
 
+        // Row 4
         c.gridy = 3;
         mainPanel.add(toNextDayButton, c);
 
+        // Row 5
         c.insets = new Insets(0, 0, 0, 0);
         c.gridy = 4;
         mainPanel.add(dateLabel, c);
 
+        // Register action listener pada semua button di HomeGUI
         loginButton.addActionListener(e -> handleToLogin());
-
         registerButton.addActionListener(e -> handleToRegister());
-
         toNextDayButton.addActionListener(e -> handleNextDay());
     }
 
@@ -103,13 +104,10 @@ public class HomeGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "toNextDayButton"
      * */
     private void handleNextDay() {
+        // Handle nextday pada setiap nota melalui static method NotaManager.toNextDay()
         NotaManager.toNextDay();
         dateLabel.setText("Hari ini: " + fmt.format(cal.getTime()));
-
-        JTextField text = new JTextField("Kamu tidur hari ini... zzz...");
-        text.setEditable(false);
-        showMessageDialog(this, text,
+        showMessageDialog(this, "Kamu tidur hari ini... zzz...",
                 "This is Prince Paul's Bubble Party's ability!", JOptionPane.INFORMATION_MESSAGE);
-        // TODO : handle nextdaynyaa nota2nya--------------------------
     }
 }

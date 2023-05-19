@@ -10,21 +10,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.*;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
     public static final String KEY = "MEMBER";
 
+    /**
+     * Constructor
+     */
     public MemberSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
     }
 
+    /**
+     * Method untuk return KEY dari MemberSystemGUI
+     */
     @Override
     public String getPageName(){
         return KEY;
     }
 
+    /**
+     * Method untuk return objek membner yang sedang login pada sistem saat ini
+     */
     public Member getLoggedInMember(){
         return loggedInMember;
     }
@@ -37,7 +45,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
+        // Initialize dan add button pada Array
         return new JButton[]{
                 new JButton("Saya ingin laundry"),
                 new JButton("Lihat detail nota saya"),
@@ -63,22 +71,29 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
-        int counter = 1;
-        int total = loggedInMember.getNotaList().length;
         String status = "";
+
+        // Iterasi setiap nota yang dipesan oleh member yang sedang login saat ini
         for (Nota nota : loggedInMember.getNotaList()) {
             status += nota + "\n\n";
         }
+
+        // Jika member tidak pernah pesan nota
         if (status.equals("")) {
-            JTextField text = new JTextField("Belum pernah laundry di CuciCuci, hiks :'(");
+            JTextArea text = new JTextArea("Belum pernah laundry di CuciCuci, hiks :'(");
             text.setEditable(false);
-            showMessageDialog(this, text, "Detail Nota", JOptionPane.ERROR_MESSAGE);
+            JScrollPane scroll = new JScrollPane(text);
+            scroll.setPreferredSize(new Dimension(300, 300));
+            showMessageDialog(this, scroll, "Detail Nota", JOptionPane.ERROR_MESSAGE);
         }
+
+        // Jika ada setidaknya 1 nota
         else {
             JTextArea text = new JTextArea(status);
             text.setEditable(false);
-            showMessageDialog(this, text, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+            JScrollPane scroll = new JScrollPane(text);
+            scroll.setPreferredSize(new Dimension(300, 300));
+            showMessageDialog(this, scroll, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -87,7 +102,6 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void createNota() {
-        // TODO
         MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 

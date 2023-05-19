@@ -1,18 +1,12 @@
 package assignments.assignment4.gui;
 
 import assignments.assignment3.LoginManager;
-import assignments.assignment3.user.Member;
-import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
-import assignments.assignment4.gui.member.employee.EmployeeSystemGUI;
-import assignments.assignment4.gui.member.member.MemberSystemGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import static javax.swing.JOptionPane.*;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class LoginGUI extends JPanel {
     public static final String KEY = "LOGIN";
@@ -44,10 +38,10 @@ public class LoginGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
         GridBagConstraints c = new GridBagConstraints();
         GridBagConstraints d = new GridBagConstraints();
 
+        // Initialize komponen-komponen yang diperlukan oleh LoginGUI
         idLabel = new JLabel("Masukkan ID Anda:", JLabel.LEFT);
         idTextField = new JTextField();
         passwordLabel = new JLabel("Masukkan password Anda:", JLabel.LEFT);
@@ -55,39 +49,41 @@ public class LoginGUI extends JPanel {
         loginButton = new JButton("Login");
         backButton = new JButton("Kembali");
 
-        c.ipadx = 400;
+        c.ipadx = 400; // Perlebar width
         c.fill = GridBagConstraints.HORIZONTAL;
-
         c.insets = new Insets(0, 0, 40, 0);
+
+        // Row 1
         c.gridx = 1;
         c.gridy = 1;
         mainPanel.add(idLabel, c);
 
+        // Row 2
         c.gridy = 2;
         mainPanel.add(idTextField, c);
 
+        // Row 3
         c.gridy = 3;
         mainPanel.add(passwordLabel, c);
 
+        // Row 4
         c.gridy = 4;
         mainPanel.add(passwordField, c);
 
+        // Row 5
         d.insets = new Insets(0, 0, 40, 0);
         d.gridx = 1;
         d.gridy = 5;
         mainPanel.add(loginButton, d);
 
+        // Row 6
         d.insets = new Insets(0, 0, 0, 0);
         d.gridy = 6;
         mainPanel.add(backButton, d);
 
-        loginButton.addActionListener(e -> {
-            handleLogin();
-        });
-
-        backButton.addActionListener(e -> {
-            handleBack();
-        });
+        // Register action listener
+        loginButton.addActionListener(e -> handleLogin());
+        backButton.addActionListener(e -> handleBack());
     }
 
     /**
@@ -95,6 +91,7 @@ public class LoginGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
+        // Clear fields dan kembali ke HomeGUI
         idTextField.setText("");
         passwordField.setText("");
         MainFrame.getInstance().navigateTo(HomeGUI.KEY);
@@ -105,17 +102,16 @@ public class LoginGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "loginButton"
      * */
     private void handleLogin() {
-        // TODO
+        // Collect data dari input fields
         String id = idTextField.getText();
         String pass = String.valueOf(passwordField.getPassword());
-        boolean param = MainFrame.getInstance().login(id, pass);
-        if (param) {
-            idTextField.setText("");
-            passwordField.setText("");
-        } else {
-            JTextField text = new JTextField("ID atau password invalid.");
-            text.setEditable(false);
-            showMessageDialog(this, text, "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
-        }
+
+        if (!MainFrame.getInstance().login(id, pass))
+            showMessageDialog(this, "ID atau password invalid.",
+                    "Invalid ID or Password", JOptionPane.ERROR_MESSAGE);
+
+        // Clear fields (berhasil/gagal login tetap clear)
+        idTextField.setText("");
+        passwordField.setText("");
     }
 }

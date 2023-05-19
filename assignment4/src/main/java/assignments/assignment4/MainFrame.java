@@ -15,7 +15,6 @@ import assignments.assignment4.gui.member.member.MemberSystemGUI;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class MainFrame extends JFrame{
     private static MainFrame instance;
     private final Loginable[] loginablePanel;
@@ -33,7 +32,6 @@ public class MainFrame extends JFrame{
 
     private MainFrame(){
         super("CuciCuciSystem");
-        // TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
         // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
         employeeSystem.addEmployee(new Employee[]{
                 new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
@@ -42,7 +40,7 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
-        setLocationRelativeTo(null); // center
+        setLocationRelativeTo(null); // Center the frame
         loginablePanel = new Loginable[]{
                 employeeSystemGUI,
                 memberSystemGUI,
@@ -85,7 +83,6 @@ public class MainFrame extends JFrame{
      * @param page -> key dari halaman yang diinginkan.
      * */
     public void navigateTo(String page){
-        // TODO
         cards.show(mainPanel, page);
     }
 
@@ -101,21 +98,27 @@ public class MainFrame extends JFrame{
      * */
     public boolean login(String id, String password){
         SystemCLI systemCLI = loginManager.getSystem(id);
-        for (Loginable panel:
-                loginablePanel) {
-            // TODO
+
+        for (Loginable panel: loginablePanel) {
+
+            // Jika merupakan employee serta ID dan password sesuai
             if (systemCLI instanceof EmployeeSystem && panel instanceof EmployeeSystemGUI) {
                 if (panel.login(id, password)) {
                     navigateTo(EmployeeSystemGUI.KEY);
                     return true;
                 }
-            } else if (systemCLI instanceof MemberSystem && panel instanceof MemberSystemGUI) {
+            }
+
+            // Jika merupakan member serta ID dan password sesuai
+            else if (systemCLI instanceof MemberSystem && panel instanceof MemberSystemGUI) {
                 if (panel.login(id, password)) {
                     navigateTo(MemberSystemGUI.KEY);
                     return true;
                 }
             }
         }
+
+        // Jika bukan seorang member maupun employee
         return false;
     }
 

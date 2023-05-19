@@ -11,14 +11,9 @@ import assignments.assignment4.gui.RegisterGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static assignments.assignment3.nota.NotaManager.cal;
-import static assignments.assignment3.nota.NotaManager.fmt;
-import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class CreateNotaGUI extends JPanel {
@@ -38,6 +33,9 @@ public class CreateNotaGUI extends JPanel {
     private JPanel mainPanel;
     private final String[] listPaket = {"Express", "Fast", "Reguler"};
 
+    /**
+     * Constructor
+     * */
     public CreateNotaGUI(MemberSystemGUI memberSystemGUI) {
         super(new BorderLayout()); // Setup layout, Feel free to make any changes
         this.memberSystemGUI = memberSystemGUI;
@@ -63,12 +61,12 @@ public class CreateNotaGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
         GridBagConstraints c = new GridBagConstraints();
 
+        // Initialize komponen yang diperlukan
         paketLabel = new JLabel("Paket Laundry:");
         paketComboBox = new JComboBox<>(listPaket);
-        paketComboBox.setSelectedItem("Express"); // defaultnya "Express"
+        paketComboBox.setSelectedItem("Express"); // Set "Express" sebagai default agar tidak error
         showPaketButton = new JButton("Show Paket");
         beratLabel = new JLabel("Berat Cucian [Kg]:");
         beratTextField = new JTextField();
@@ -77,49 +75,49 @@ public class CreateNotaGUI extends JPanel {
         createNotaButton = new JButton("Buat Nota");
         backButton = new JButton("Kembali");
 
-        c.gridx = 1;
-        c.gridy = 1;
+        // Set layout
         c.insets = new Insets(5,5,5,5);
         c.fill = GridBagConstraints.HORIZONTAL;
 
+        // Row 1
+        c.gridx = 1;
+        c.gridy = 1;
         mainPanel.add(paketLabel, c);
         c.gridx = 2;
         mainPanel.add(paketComboBox, c);
         c.gridx = 3;
         mainPanel.add(showPaketButton, c);
 
+        // Row 2
         c.gridx = 1;
         c.gridy = 2;
         mainPanel.add(beratLabel, c);
         c.gridx = 2;
         mainPanel.add(beratTextField, c);
 
+        // Row 3
         c.gridx = 1;
         c.gridy = 3;
         mainPanel.add(setrikaCheckBox, c);
 
+        // Row 4
         c.gridy = 4;
         mainPanel.add(antarCheckBox, c);
 
+        // Row 5
         c.gridwidth = 3;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridy = 5;
         mainPanel.add(createNotaButton, c);
 
+        // Row 6
         c.gridy = 6;
         mainPanel.add(backButton, c);
 
-        showPaketButton.addActionListener(e -> {
-            showPaket();
-        });
-
-        createNotaButton.addActionListener(e -> {
-            createNota();
-        });
-
-        backButton.addActionListener(e -> {
-            handleBack();
-        });
+        // Register action listener pada 3 button di CreateNotaGUI
+        showPaketButton.addActionListener(e -> showPaket());
+        createNotaButton.addActionListener(e -> createNota());
+        backButton.addActionListener(e -> handleBack());
     }
 
     /**
@@ -150,7 +148,6 @@ public class CreateNotaGUI extends JPanel {
         // TODO
         Member loggedInMember = memberSystemGUI.getLoggedInMember();
         String paket = (String) paketComboBox.getSelectedItem();
-        // TODO
         String beratCek = beratTextField.getText();
         boolean param = RegisterGUI.validasiDigit(beratCek, "berat"); // jika input berat valid --> param = true
         if (param) {
@@ -158,9 +155,8 @@ public class CreateNotaGUI extends JPanel {
 
             if (berat < 2) {
                 berat = 2;
-                JTextField text = new JTextField("Cucian kurang dari 2kg, maka cucian akan dianggap sebagai 2kg");
-                text.setEditable(false);
-                showMessageDialog(this, text, "Info", JOptionPane.INFORMATION_MESSAGE);
+                showMessageDialog(this, "Cucian kurang dari 2kg, maka cucian akan dianggap sebagai 2kg",
+                        "Info", JOptionPane.INFORMATION_MESSAGE);
             }
 
             Nota nota = new Nota(loggedInMember, berat, paket, fmt.format(cal.getTime()));
@@ -172,9 +168,7 @@ public class CreateNotaGUI extends JPanel {
             NotaManager.addNota(nota);
             loggedInMember.addNota(nota);
 
-            JTextField text = new JTextField("Nota berhasil dibuat!");
-            text.setEditable(false);
-            showMessageDialog(this, text, "Success", JOptionPane.INFORMATION_MESSAGE);
+            showMessageDialog(this, "Nota berhasil dibuat!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             // clear fields
             paketComboBox.setSelectedItem("Express");
@@ -183,9 +177,9 @@ public class CreateNotaGUI extends JPanel {
             antarCheckBox.setSelected(false);
 
         } else {
-            JTextField text = new JTextField("Berat Cucian harus angka");
-            text.setEditable(false);
-            showMessageDialog(this, text, "Error", JOptionPane.ERROR_MESSAGE);
+            showMessageDialog(this, "Berat Cucian harus angka",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            beratTextField.setText("");
         }
     }
 
@@ -194,11 +188,12 @@ public class CreateNotaGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
-        // TODO
-         paketComboBox.setSelectedItem("Express");
-         beratTextField.setText("");
-         setrikaCheckBox.setSelected(false);
-         antarCheckBox.setSelected(false);
-         MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        // Set all input handler back to default value
+        paketComboBox.setSelectedItem("Express");
+        beratTextField.setText("");
+        setrikaCheckBox.setSelected(false);
+        antarCheckBox.setSelected(false);
+
+        MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
     }
 }
